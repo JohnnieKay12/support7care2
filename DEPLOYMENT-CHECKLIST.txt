@@ -1,0 +1,25 @@
+SUPPORT7CARE SECOND FORM — DEPLOYMENT CHECKLIST
+
+RENDER BACKEND
+Build command: npm install
+Start command: npm run server
+Environment variables:
+RESEND_API_KEY = your existing Resend API key
+FROM_EMAIL = Support7Care Applications <applications@support7care.co.uk>
+RECRUITMENT_EMAIL = leviemmanuel25@gmail.com
+FRONTEND_ORIGIN = https://support7care.vercel.app
+NODE_ENV = production
+
+VERCEL FRONTEND
+Environment variable:
+VITE_API_BASE_URL = https://YOUR-RENDER-BACKEND.onrender.com
+Use your actual Render backend URL and do not add a trailing slash. Redeploy Vercel after setting it.
+
+CHECKS
+1. Open https://YOUR-RENDER-BACKEND.onrender.com/api/health. Expected response: {"ok":true}
+2. Submit a test form using an email address you can access.
+3. Confirm the admin email arrives.
+4. Confirm the applicant confirmation email arrives.
+5. Check Render logs and Resend email logs if either email fails.
+
+Keep RESEND_API_KEY only on Render, never in frontend/Vercel VITE variables.
