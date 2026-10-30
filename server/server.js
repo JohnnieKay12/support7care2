@@ -377,7 +377,7 @@ app.post('/api/acknowledgements', async (req, res) => {
     const applicantResult = await resend.emails.send({
       from: process.env.FROM_EMAIL,
       to: [data.emailAddress],
-      replyTo: process.env.RECRUITMENT_EMAIL,
+      replyTo: recruitmentEmails[0],
       subject:
         'Confirmation of your Support7Care form submission',
       html: applicantHtml,
