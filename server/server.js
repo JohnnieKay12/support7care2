@@ -47,6 +47,11 @@ app.use(
 // Parse JSON request bodies
 app.use(express.json({ limit: '100kb' }));
 
+const recruitmentEmails = (process.env.RECRUITMENT_EMAIL || '')
+  .split(',')
+  .map(email => email.trim())
+  .filter(Boolean);
+
 // Fields accepted from the frontend
 const allowedKeys = new Set([
   'fullName',
@@ -196,7 +201,7 @@ app.post('/api/acknowledgements', async (req, res) => {
     if (
       !process.env.RESEND_API_KEY ||
       !process.env.FROM_EMAIL ||
-      !process.env.RECRUITMENT_EMAIL
+      recruitmentEmails.length === 0
     ) {
       console.error('Missing email configuration in environment.');
 
@@ -315,7 +320,7 @@ app.post('/api/acknowledgements', async (req, res) => {
 
     const adminResult = await resend.emails.send({
       from: process.env.FROM_EMAIL,
-      to: [process.env.RECRUITMENT_EMAIL],
+      to: recruitmentEmails,
       replyTo: data.emailAddress,
       subject,
       html: adminHtml,
